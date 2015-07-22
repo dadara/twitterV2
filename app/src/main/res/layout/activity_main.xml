@@ -3,19 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/textView"
-        android:layout_weight="0.30" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginTop="8pt"
         android:gravity="center"
         android:orientation="vertical" >
 
@@ -31,11 +25,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8pt"
             android:layout_centerInParent="true"/>
+
+        <com.twitter.sdk.android.tweetui.TweetView
+            xmlns:twittersdk="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/photo_default_tweet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1pt"
+            twittersdk:tw__tweet_id="20"/>
     </LinearLayout>
 
-
-
-
+    <LinearLayout
+        android:id="@+id/tweetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8pt"
+        android:gravity="center"
+        android:orientation="vertical" >
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
