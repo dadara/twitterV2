@@ -54,21 +54,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(Result<TwitterSession> result) {
                 // Do something with result, which provides a TwitterSession for making API calls
-               Context context = getApplicationContext();
+               /* Context context = getApplicationContext();
                 CharSequence text = "logged in";
                 int duration = Toast.LENGTH_SHORT;
 
-                Toast.makeText(context, text, duration).show();
+                Toast.makeText(context, text, duration).show();*/
             }
 
             @Override
             public void failure(TwitterException exception) {
                 // Do something on failure
-                Context context = getApplicationContext();
+                /*Context context = getApplicationContext();
                 CharSequence text = "not logged in";
                 int duration = Toast.LENGTH_SHORT;
 
-                Toast.makeText(context, text, duration).show();
+                Toast.makeText(context, text, duration).show();*/
             }
         });
 
