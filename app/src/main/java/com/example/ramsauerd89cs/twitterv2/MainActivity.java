@@ -23,6 +23,7 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.tweetui.TweetView;
 import android.widget.Toast;
 import android.content.Context;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(Result<TwitterSession> result) {
                 // Do something with result, which provides a TwitterSession for making API calls
-               Context context = getApplicationContext();
+                Context context = getApplicationContext();
                 CharSequence text = "logged in";
                 int duration = Toast.LENGTH_SHORT;
 
@@ -72,37 +73,57 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
-            @Override
-            public void success(Result<Tweet> result) {
-                //Do something with result, which provides a Tweet inside of result.data
-                final LinearLayout myLayout = (LinearLayout) findViewById(R.id.tweetLayout);
+       /*statusesService.userTimeline(2472630098L,"hitchBOT", 5, null, null, false, false, false,false, new Callback<List<Tweet>>() {
 
-                final long tweetId = 510908133917487104L;
+           public void success(Result<List<Tweet>> result) {
+               Context context = getApplicationContext();
+               CharSequence text = "no results";
+               int duration = Toast.LENGTH_SHORT;
+
+               Toast.makeText(context, "data:   " + result.data.toString(), duration).show();
+           }
+
+
+           public void failure(TwitterException exception) {
+               Context context = getApplicationContext();
+               CharSequence text = "no results hitchBOT";
+               int duration = Toast.LENGTH_SHORT;
+               Toast.makeText(context, text, duration).show();
+           }
+       });*/
+
+       /*statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
+
+           @Override
+           public void success(Result<Tweet> result) {
+               //Do something with result, which provides a Tweet inside of result.data
+               final LinearLayout myLayout = (LinearLayout) findViewById(R.id.tweetLayout);
+
+               //final long tweetId = 510908133917487104L;
                // TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
                TweetUtils.loadTweet(result.data.getId(), new Callback<Tweet>() {
 
-                        @Override
-                    public void success(Result<Tweet> result) {
-                        myLayout.addView(new TweetView(MainActivity.this, result.data));
-                    }
+                   @Override
+                   public void success(Result<Tweet> result) {
+                       myLayout.addView(new TweetView(MainActivity.this, result.data));
+                   }
 
-                    @Override
-                    public void failure(TwitterException exception) {
-                        Context context = getApplicationContext();
-                        CharSequence text = "no results";
-                        int duration = Toast.LENGTH_SHORT;
+                   @Override
+                   public void failure(TwitterException exception) {
+                       Context context = getApplicationContext();
+                       CharSequence text = "no results";
+                       int duration = Toast.LENGTH_SHORT;
 
-                        Toast.makeText(context, text, duration).show();
+                       Toast.makeText(context, text, duration).show();
 
-                    }
-                });
-            }
+                   }
+               });
+           }
 
-            public void failure(TwitterException exception) {
-                //Do something on failure
-            }
-        });
+           public void failure(TwitterException exception) {
+               //Do something on failure
+           }
+       });*/
 
     }
     @Override
