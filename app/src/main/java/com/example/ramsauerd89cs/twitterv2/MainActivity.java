@@ -48,63 +48,62 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
+        twitterApiClient = TwitterCore.getInstance().getApiClient();
+        // Can also use Twitter directly: Twitter.getApiClient()
+        statusesService = twitterApiClient.getStatusesService();
         setContentView(R.layout.activity_main);
+
+        final Context context = getApplicationContext();
+
+
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
+            CharSequence text;
+            int duration;
+            public void success(Result<TwitterSession> result) {
+                // Do something with result, which provides a TwitterSession for making API calls
+                //context = getApplicationContext();
+                text = "logged in";
+                duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+            }
 
-        Context context = getApplicationContext();
-        CharSequence text;
-        int duration;
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                //context = getApplicationContext();
+                text = "not logged in";
+                duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
+            }
+        });
 
-        public void success(Result<TwitterSession> result) {
-            // Do something with result, which provides a TwitterSession for making API calls
-            //context = getApplicationContext();
-            text = "logged in";
-            duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, text, duration).show();
-        }
+        statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                //Do something with result, which provides a Tweet inside of result.data
+                final LinearLayout myLayout = (LinearLayout) findViewById(R.id.tweetLayout);
 
-        @Override
-        public void failure(TwitterException exception) {
-            // Do something on failure
-            //context = getApplicationContext();
-            text = "not logged in";
-            duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, text, duration).show();
-        }
-    });
+                final long tweetId = 510908133917487104L;
+                TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
+                    @Override
+                    public void success(Result<Tweet> result) {
+                        myLayout.addView(new TweetView(MainActivity.this, result.data));
+                    }
 
-   /* statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
-        @Override
-        public void success(Result<Tweet> result) {
-            //Do something with result, which provides a Tweet inside of result.data
-            final LinearLayout myLayout = (LinearLayout) findViewById(R.id.tweetLayout);
+                    @Override
+                    public void failure(TwitterException exception) {
+                        String text = "no results";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast.makeText(context, text, duration).show();
+                    }
+                });
+            }
 
-            final long tweetId = 510908133917487104L;
-            // TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
-            TweetUtils.loadTweet(result.data.getId(), new Callback<Tweet>() {
-
-                @Override
-                public void success(Result<Tweet> result) {
-                    myLayout.addView(new TweetView(MainActivity.this, result.data));
-                }
-
-                @Override
-                public void failure(TwitterException exception) {
-                    Context context = getApplicationContext();
-                    CharSequence text = "no results";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast.makeText(context, text, duration).show();
-
-                }
-            });
-        }
-
-        public void failure(TwitterException exception) {
-            //Do something on failure
-        }
-    });*/
+            public void failure(TwitterException exception) {
+                //Do something on failure
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
