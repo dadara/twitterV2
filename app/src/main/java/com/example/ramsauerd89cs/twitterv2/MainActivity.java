@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
+       /* statusesService.show(524971209851543553L, null, null, null, new Callback<Tweet>() {
             @Override
-            public void success(Result<Tweet> result) {
+            public void success(Result<Tweet> result) {*/
                 //Do something with result, which provides a Tweet inside of result.data
                 final LinearLayout myLayout = (LinearLayout) findViewById(R.id.tweetLayout);
 
@@ -97,13 +97,15 @@ public class MainActivity extends AppCompatActivity {
                         int duration = Toast.LENGTH_SHORT;
                         Toast.makeText(context, text, duration).show();
                     }
-                });
-            }
+               });
+           /* }
 
             public void failure(TwitterException exception) {
                 //Do something on failure
             }
-        });
+        });*/
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
